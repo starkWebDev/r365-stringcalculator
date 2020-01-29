@@ -19,7 +19,7 @@ namespace r365challengecalculator
             }
 
             int Calculate(string nums){
-                List<string> inputNums = new List<string>(nums.Split(','));
+                List<string> inputNums = new List<string>(nums.Split(new char[] { ',', '\n' }));
                 int total;
 
                 if (inputNums.Count == 0)
@@ -36,7 +36,7 @@ namespace r365challengecalculator
 
             void Testing(string input, int expected)
             {
-                Console.WriteLine($"Input: {input}\nExpected output: {expected}");
+                Console.WriteLine($"Input: {input.Replace("\n","\\n")}\nExpected output: {expected}");
                 int answer = Calculate(input);
                 Console.WriteLine(answer == expected ? "Correct\n" : $"Incorrect. Got {answer}\n");
             }
@@ -57,6 +57,7 @@ namespace r365challengecalculator
             Testing("1,1,hi", 2);
             Testing("hi,1,1", 2);
             Testing(",1,1", 2);
+            Testing("1\n1,1", 3);
 
         }
     }
