@@ -13,7 +13,16 @@ namespace r365challengecalculator
             {
                 if (Int32.TryParse(input, out _))
                 {
-                    return Int32.Parse(input);
+                    int outNum = Int32.Parse(input);
+                    if ( outNum > 1000)
+                    {
+                        return 0;
+                    }
+                    else
+                    {
+                        return outNum;
+                    }
+                    
                 }
                 return 0;
             }
@@ -82,6 +91,7 @@ namespace r365challengecalculator
             Testing(",1,1", "2");
             Testing("1\n1,1", "3");
             Testing("-1,-2,-3", "Error");
+            Testing("1,1002,3", "4");
 
         }
     }
