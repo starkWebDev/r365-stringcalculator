@@ -28,9 +28,10 @@ namespace r365challengecalculator
             }
 
             string Calculate(string _nums){
-                char delim = _nums[0];
-                string nums = _nums.Substring(2);
-                List<string> inputNums = new List<string>(nums.Split(new char[] { delim, '\n' }));
+                int loc = _nums.IndexOf('\n');
+                string delimStr = _nums.Substring(0, loc);
+                string nums = _nums.Substring(loc);
+                List<string> inputNums = new List<string>(nums.Split(new string[] { delimStr, "\n" }, StringSplitOptions.None));
 
                 int total;
 
@@ -96,6 +97,9 @@ namespace r365challengecalculator
             Testing(",\n-1,-2,-3", "Error");
             Testing(",\n1,1002,3", "4");
             Testing("*\n4*5", "9");
+            Testing("**\n4**5", "9");
+            Testing("hello\n4hello5", "9");
+
 
             // Based on the examples given in requirement 6, specifically ",\n2,ff,100 will return 102",
             // I am going go on the assumption that the previous formats will be accepted in this way as well.
