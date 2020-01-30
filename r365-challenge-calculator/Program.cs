@@ -18,46 +18,70 @@ namespace r365challengecalculator
                 return 0;
             }
 
-            int Calculate(string nums){
+            string Calculate(string nums){
                 List<string> inputNums = new List<string>(nums.Split(new char[] { ',', '\n' }));
                 int total;
 
                 if (inputNums.Count == 0)
                 {
                     total = 0;
-                    return (total);
+                    return (total.ToString());
                 }
 
-                IEnumerable<int> convertedNums =  inputNums.Select(input => CheckForValid(input));
+                List<int> negNums = new List<int>();
+
+                List<int> convertedNums = new List<int>();
+
+                foreach(var num in inputNums)
+                {
+                    int _num = CheckForValid(num);
+                    if (_num < 0)
+                    {
+                        negNums.Add(_num);
+                    }
+                    convertedNums.Add(_num);
+                }
+
+                if (negNums.Count != 0)
+                {
+                    string msg = "Error. Inputs cannot be negative. you input: ";
+                    foreach(var num in negNums)
+                    {
+                        msg += $" {num},";
+                    }
+                    return (msg);
+
+                }
+
                 total = convertedNums.Sum();
-
-                return(total);
+                return(total.ToString());
             }
 
-            void Testing(string input, int expected)
+            void Testing(string input, string expected)
             {
-                Console.WriteLine($"Input: {input.Replace("\n","\\n")}\nExpected output: {expected}");
-                int answer = Calculate(input);
-                Console.WriteLine(answer == expected ? "Correct\n" : $"Incorrect. Got {answer}\n");
+                Console.WriteLine($"Input: {input.Replace("\n", "\\n")}\nExpected output: {expected}");
+                string answer = Calculate(input);
+                Console.WriteLine($"Output: {answer}\n");
             }
 
-            Testing("1,1", 2);
-            Testing("", 0);
-            Testing("1,hi", 1);
-            Testing("hi,1", 1);
-            Testing("hi", 0);
-            Testing("hi,hi", 0);
-            Testing("2,2", 4);
-            Testing(",", 0);
-            Testing("-1,5", 4);
-            Testing("1,2,3", 6);
-            Testing("1,2,3,4", 10);
-            Testing("hi,hi,hi", 0);
-            Testing("hi,1,hi", 1);
-            Testing("1,1,hi", 2);
-            Testing("hi,1,1", 2);
-            Testing(",1,1", 2);
-            Testing("1\n1,1", 3);
+            Testing("1,1", "2");
+            Testing("", "0");
+            Testing("1,hi", "1");
+            Testing("hi,1", "1");
+            Testing("hi", "0");
+            Testing("hi,hi", "0");
+            Testing("2,2", "4");
+            Testing(",", "0");
+            Testing("-1,5", "Error");
+            Testing("1,2,3", "6");
+            Testing("1,2,3,4", "10");
+            Testing("hi,hi,hi", "0");
+            Testing("hi,1,hi", "1");
+            Testing("1,1,hi", "2");
+            Testing("hi,1,1", "2");
+            Testing(",1,1", "2");
+            Testing("1\n1,1", "3");
+            Testing("-1,-2,-3", "Error");
 
         }
     }
