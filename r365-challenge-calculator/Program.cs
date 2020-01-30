@@ -27,8 +27,11 @@ namespace r365challengecalculator
                 return 0;
             }
 
-            string Calculate(string nums){
-                List<string> inputNums = new List<string>(nums.Split(new char[] { ',', '\n' }));
+            string Calculate(string _nums){
+                char delim = _nums[0];
+                string nums = _nums.Substring(2);
+                List<string> inputNums = new List<string>(nums.Split(new char[] { delim, '\n' }));
+
                 int total;
 
                 if (inputNums.Count == 0)
@@ -73,25 +76,32 @@ namespace r365challengecalculator
                 Console.WriteLine($"Output: {answer}\n");
             }
 
-            Testing("1,1", "2");
-            Testing("", "0");
-            Testing("1,hi", "1");
-            Testing("hi,1", "1");
-            Testing("hi", "0");
-            Testing("hi,hi", "0");
-            Testing("2,2", "4");
-            Testing(",", "0");
-            Testing("-1,5", "Error");
-            Testing("1,2,3", "6");
-            Testing("1,2,3,4", "10");
-            Testing("hi,hi,hi", "0");
-            Testing("hi,1,hi", "1");
-            Testing("1,1,hi", "2");
-            Testing("hi,1,1", "2");
-            Testing(",1,1", "2");
-            Testing("1\n1,1", "3");
-            Testing("-1,-2,-3", "Error");
-            Testing("1,1002,3", "4");
+            Testing(",\n1,1", "2");
+            Testing(",\n", "0");
+            Testing(",\n1,hi", "1");
+            Testing(",\nhi,1", "1");
+            Testing(",\nhi", "0");
+            Testing(",\nhi,hi", "0");
+            Testing(",\n2,2", "4");
+            Testing(",\n,", "0");
+            Testing(",\n-1,5", "Error");
+            Testing(",\n1,2,3", "6");
+            Testing(",\n1,2,3,4", "10");
+            Testing(",\nhi,hi,hi", "0");
+            Testing(",\nhi,1,hi", "1");
+            Testing(",\n1,1,hi", "2");
+            Testing(",\nhi,1,1", "2");
+            Testing(",\n,1,1", "2");
+            Testing(",\n1\n1,1", "3");
+            Testing(",\n-1,-2,-3", "Error");
+            Testing(",\n1,1002,3", "4");
+            Testing("*\n4*5", "9");
+
+            // Based on the examples given in requirement 6, specifically ",\n2,ff,100 will return 102",
+            // I am going go on the assumption that the previous formats will be accepted in this way as well.
+            // my reason for this is that if both methods of submission were allowed there would be no way
+            // to know if the submission "1\n2" was supposed to return 3 - like previous format - or if
+            // the 1 was the delimiter - like the new format -  which would result in 2
 
         }
     }
